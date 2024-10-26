@@ -1,1 +1,5 @@
 global-exclude *.py[cod]
+
+include *.md
+include *.toml
+include *.txt
