@@ -1,6 +1,6 @@
 # See https://docs.astral.sh/ruff/settings for help
 
-target-version = "py37" # Always generate Python 3.6-compatible code.
+target-version = "py36" # Always generate Python 3.6-compatible code.
 line-length = 120 # Allow lines to be as long as 120.
 
 [format]
@@ -43,6 +43,6 @@ ignore = [
 [lint.isort]
 length-sort = true # sort imports by their string length
 combine-as-imports = true
-known-first-party = ["patest"]
+known-first-party = ["<your_package_name>"]
 lines-after-imports = 1 # Use a single line after each import block.
 single-line-exclusions = ["os", "json", "re"]

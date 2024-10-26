@@ -1,6 +1,2 @@
 setuptools>=69.0.0
-isort
-ruff
-opencv-python
-tqdm
-typer
+numpy>=1.21.2
