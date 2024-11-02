@@ -100,6 +100,32 @@ jobs:
     #     with:
     #       repository-url: https://test.pypi.org/legacy/
 
+
+    # Publish-TestPyPI: # task 3: publish to PyPI 
+    #   name: Publish distribution to TestPyPI
+    #   runs-on: ubuntu-latest
+
+    #   needs: Build-distribution-packages # wait for task 2 to finish
+  
+    #   environment:
+    #     name: testpypi
+    #     url: https://test.pypi.org/p/patest  # Replace <package-name> with your PyPI project name
+  
+    #   permissions:
+    #     id-token: write  # IMPORTANT: mandatory for trusted publishing
+  
+    #   steps:
+    #   - name: Download all the dists
+    #     uses: actions/download-artifact@v4
+    #     with:
+    #       name: build-results # should be the same as the name in task 1
+    #       path: dist/
+
+    #   - name: Upload to TestPyPI
+    #     uses: pypa/gh-action-pypi-publish@release/v1
+    #     with:
+    #       repository-url: https://test.pypi.org/legacy/
+
     Github-Release: # task4: create a Github Release
         name: Create GitHub Release
         runs-on: ubuntu-latest

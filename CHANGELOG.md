@@ -1,3 +1,8 @@
+# v1.1.2
+
+All pipeline tested
+
+---
 
 # v1.0.1
 
