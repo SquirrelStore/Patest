@@ -1,25 +1,40 @@
 #! /usr/bin/env bash
 
+cyan_output() {
+    echo -e "\033[36m$1\033[0m"
+}
+
+green_output() {
+    echo -e "\033[32m$1\033[0m"
+}
+
+red_output() {
+    echo -e "\033[31m$1\033[0m"
+}
+
+DIR=$(dirname "$(readlink -f "$0")")
+
+if [[ -d "$DIR/dist" ]]; then 
+    rm -r "$DIR/dist"
+fi
+
 eval "$(conda shell.bash hook)"
 
 envs=$(conda env list | grep -v "#" | cut -d " " -f1)
 
-echo -e "\033[36m"
-
-echo "Available conda environments:"
-select env in $envs; do
+cyan_output "Available conda environments:"
+PS3="Choose your Python env: "
+select env in $envs
+do
     if [ -n "$env" ]; then
-        echo "$env selected."
+        cyan_output "$env selected."
 	conda activate "$env"
-	echo "$env activated."
+	green_output "$env activated."
         break
     else
-        echo "Invalid selection. Please try again."
+        red_output "Invalid selection. Please try again."
     fi
 done
 
-echo "Install setuptools, build, wheel, twine, isort and ruff..."
-pip install setuptools build wheel twine isort ruff
-
-echo "building..."
+cyan_output "building..."
 python -m build -v -n .
