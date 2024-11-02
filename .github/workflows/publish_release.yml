@@ -28,6 +28,7 @@ jobs:
         - name: Install packages used for building  # Step 3: Install dependencies used for package building
           run: |   # concrete commands, `|` is used to indicate a multi-line command
               python3 -m pip install setuptools build wheel isort ruff --user
+              python3 -m pip install twine check-manifest --user
         
         - name: Build distribution packages         # Step 4: Build Python distribution packages.
           run: python3 -m build -v -n .
@@ -122,7 +123,7 @@ jobs:
       name: Publish distribution to TestPyPI
       runs-on: ubuntu-latest
 
-      if: startsWith(github.ref, 'refs/tags/')  # only publish to PyPI on tag pushes
+      #if: startsWith(github.ref, 'refs/tags/')  # only publish to PyPI on tag pushes
       needs: Build-distribution-packages # wait for task 2 to finish
   
       environment:
@@ -148,7 +149,7 @@ jobs:
       name: Publish distribution to local pypi-server
       runs-on: ubuntu-latest
 
-      if: startsWith(github.ref, 'refs/tags/')  # only publish to PyPI on tag pushes
+      #if: startsWith(github.ref, 'refs/tags/')  # only publish to PyPI on tag pushes
       needs: Build-distribution-packages # wait for task 2 to finish
   
       environment:
