@@ -141,8 +141,8 @@ jobs:
           
         - name: Generate Changelog
           run: |
-            release_note=$(awk -v RS="---" 'NR==1{gsub(/\n+$/, ""); print}' CHANGELOG.md)
-            echo $release_note
+            awk -v RS="---" 'NR==1{gsub(/\n+$/, ""); print}' CHANGELOG.md > ${{ github.workspace }}-RELEASE.txt
+            cat ${{ github.workspace }}-RELEASE.txt
         
         - name: Download all the dists
           uses: actions/download-artifact@v4
@@ -157,7 +157,7 @@ jobs:
             gh release create
             '${{ github.ref_name }}'
             --repo '${{ github.repository }}'
-            --notes "$release_note"
+            --notes "$(cat ${{ github.workspace }}-RELEASE.txt)"
 
         - name: Upload artifact to GitHub Release
           env:
