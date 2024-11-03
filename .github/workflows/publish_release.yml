@@ -149,33 +149,23 @@ jobs:
           with:
             name: build-results
             path: dist/
+        
+        - name: Create GitHub Release
+          env:
+            GITHUB_TOKEN: ${{ github.token }}
+          run: >-
+            gh release create
+            '${{ github.ref_name }}'
+            --repo '${{ github.repository }}'
+            --notes '$(cat ${{ github.workspace }}-RELEASE.txt)'
 
-        - name: Create Release
-          uses: softprops/action-gh-release@v2
-          with:
-            make_latest: true
-            target_commitish: ${{ github.sha }}
-            body_path: ${{ github.workspace }}-RELEASE.txt
-            files: dist/*
-        
-        # - name: Create GitHub Release
-        #   env:
-        #     GITHUB_TOKEN: ${{ github.token }}
-        #   run: >-
-        #     gh release create
-        #     '${{ github.ref_name }}'
-        #     --repo '${{ github.repository }}'
-        #     --notes "$release_note"
-        
-        
-
-        # - name: Upload artifact to GitHub Release
-        #   env:
-        #     GITHUB_TOKEN: ${{ github.token }}
-        #   # Upload to GitHub Release using the `gh` CLI.
-        #   # `dist/` contains the built packages
-        #   run: >-
-        #     gh release upload
-        #     '${{ github.ref_name }}' dist/**
-        #     --repo '${{ github.repository }}'
+        - name: Upload artifact to GitHub Release
+          env:
+            GITHUB_TOKEN: ${{ github.token }}
+          # Upload to GitHub Release using the `gh` CLI.
+          # `dist/` contains the built packages
+          run: >-
+            gh release upload
+            '${{ github.ref_name }}' dist/**
+            --repo '${{ github.repository }}'
           
