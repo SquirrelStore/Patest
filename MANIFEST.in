@@ -6,8 +6,6 @@ global-exclude *.so *.dylib *.dll *.lib
 global-exclude *.exe *.bin
 global-exclude *.o *.a *.so.* *.dylib.* *.dll.*
 
-prune __pycache__/
-
 include *.md
 include *.toml
 include *.txt

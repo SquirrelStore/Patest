@@ -5,7 +5,7 @@ Copyright (C) 2024 Ahzyuan. - All Rights Reserved
  * If not, please visit <full_text-url-of-license-terms> for more information.
 """
 
-__version__ = '1.1.2'
+__version__ = '1.1.3'
 
 from .greet import greet
 
