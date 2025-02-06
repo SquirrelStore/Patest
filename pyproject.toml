@@ -1,0 +1,126 @@
+# refer to https://packaging.python.org/en/latest/guides/writing-pyproject-toml
+# See https://docs.astral.sh/ruff/settings for configuring ruff
+
+[build-system]  # define build backend and dependencies needed to build your project
+requires = ["setuptools>=66.0", "wheel", "isort", "ruff"]           # dependencies needed to build your project
+build-backend = "setuptools.build_meta"                             # build backend
+
+[project] # define metadata of your project
+
+# ---------------- Dynamic info ----------------
+dynamic = ["version","dependencies"]                                # dynamic info will be filled in by the build backend
+
+# ---------------- Basic info ----------------
+name = "patest"                                               # package name
+authors = [
+  { name="Ahzyuan", email="hzy_dev@yeah.net" }, 
+]
+maintainers = [
+  { name="Ahzyuan", email="hzy_dev@yeah.net" }, 
+]
+description = "Package test"                             # one-line description of your project
+readme = {file = "README.md", content-type = "text/markdown"}       # specify README file
+
+# ---------------- Dependency info ----------------
+requires-python = ">=3.7"                                           # Python version requirement
+
+# ---------------- Other ----------------
+keywords = ["test"]    # keywords of your project, will help to suggest your project when people search for these keywords.
+classifiers = [               # Trove classifiers, Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Build Tools",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+
+# ---------------- Optional dependency ----------------
+[project.optional-dependencies] 
+docs = ["sphinx>=7.0.0"]
+
+test = [
+  "pytest", 
+  "pytest-sugar"]
+
+cli = [
+  "rich",
+  "click",
+]
+
+# Install a command as part of your package
+[project.gui-scripts]                           # use [project.gui-scripts] to compatiable with differernt system   
+patest = "patest.cli:app"                      # command = package:func
+
+
+# URLs associated with your project
+[project.urls]
+Homepage = "https://github.com/Ahzyuan/Patest"                    
+Repository = "https://github.com/Ahzyuan/Patest.git" 
+Issues = "https://github.com/Ahzyuan/Patest/issues" 
+Changelog = "https://github.com/Ahzyuan/Patest/blob/master/CHANGELOG.md"
+
+[tool.setuptools.dynamic]
+version = {attr = "patest.__version__"}  # automatically obtain the value by `my_package.__version__`.
+dependencies = {file = ["requirements.txt", "requirement.txt", "requirement"]}
+
+# -------------------------------- Tools Setting --------------------------------
+[tool.setuptools]
+license-files = ['LICEN[CS]E*', 'COPYING*', 'NOTICE*', 'AUTHORS*']  # specify License files
+
+[tool.setuptools.packages]
+find = {}  # Scan the project directory with the default parameters
+
+[tool.ruff]
+# Allow lines to be as long as 120.
+line-length = 120
+
+[tool.ruff.format]
+# Enable reformatting of code snippets in docstrings.
+docstring-code-format = true
+
+[tool.ruff.lint]
+# Skip unused variable rules
+ignore = [
+    "ANN101",  # Missing type annotation for `self` in method
+    "ANN102",  # Missing type annotation for `cls` in classmethod
+    "ANN401",  # Dynamically typed expressions (typing.Any) are disallowed
+    "C901",    # function is too complex (12 > 10)
+    "COM812",  # Trailing comma missing
+    "D",       # Docstring rules
+    "EM101",   # Exception must not use a string literal, assign to variable first
+    "EM102",   # Exception must not use an f-string literal, assign to variable first
+    "ERA001",  # Found commented-out code
+    "FBT001",  # Boolean positional arg in function definition
+    "FBT002",  # Boolean default value in function definition
+    "FBT003",  # Boolean positional value in function call
+    "FIX002",  # Line contains TODO
+    "ISC001",  # Isort
+    "PLR0911", # Too many return statements (11 > 6)
+    "PLR2004", # Magic value used in comparison, consider replacing 2 with a constant variable
+    "PLR0912", # Too many branches
+    "PLR0913", # Too many arguments to function call
+    "PLR0915", # Too many statements
+    "S101",    # Use of `assert` detected
+    "S311",    # Standard pseudo-random generators are not suitable for cryptographic purposes
+    "T201",    # print() found
+    "T203",    # pprint() found
+    "TD002",   # Missing author in TODO; try: `# TODO(<author_name>): ...`
+    "TD003",   # Missing issue link on the line following this TODO
+    "TD005",   # Missing issue description after `TODO`
+    "TRY003",  # Avoid specifying long messages outside the exception class
+    "PLW2901", # `for` loop variable `name` overwritten by assignment target
+    "SLF001",  # Private member accessed: `_modules`
+]
+
+[tool.ruff.lint.isort]
+length-sort = true                              # sort imports by their string length
+combine-as-imports = true                       # combines as imports on the same line
+known-first-party = ["patest"]
+lines-after-imports = 1                         # Use a single line after each import block.
+single-line-exclusions = ["os", "json", "re"]   # modules to exclude from the single line rule
